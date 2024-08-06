@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const UserController = require('../controllers/user');
+const ItemController = require('../controllers/item');
+const authentication = require('../middlewares/authentication');
 const errorHandler = require('../middlewares/errorhandler');
  
 router.get('/', (req, res) => {
@@ -8,6 +10,9 @@ router.get('/', (req, res) => {
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.post('/google-login', UserController.googleLogin);
+
+router.use(authentication);
+router.post('/items', ItemController.addItem);
 
 router.use(errorHandler);
 
