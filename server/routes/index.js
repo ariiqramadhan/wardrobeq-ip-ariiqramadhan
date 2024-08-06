@@ -12,6 +12,8 @@ router.post('/login', UserController.login);
 router.post('/google-login', UserController.googleLogin);
 
 router.use(authentication);
+router.get('/items', ItemController.items);
+router.get('/catitems', ItemController.catItems);
 router.post('/items', ItemController.addItem);
 
 router.use(errorHandler);
