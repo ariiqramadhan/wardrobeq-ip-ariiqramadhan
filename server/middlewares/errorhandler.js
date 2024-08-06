@@ -23,6 +23,14 @@ const errorHandler = (err, req, res, next) => {
             status = 401;
             message = 'Invalid email or password!';
             break;
+        case 'InvalidToken':
+            status = 401;
+            message = 'Invalid Token!';
+            break;
+        case 'JsonWebTokenError':
+            status = 401;
+            message = 'Invalid Token!';
+            break;
     }
 
     res.status(status).json({message});
