@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-const { User } = require('../models');
+const { User, Profile } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
 
 class Controller {
@@ -10,6 +10,9 @@ class Controller {
             const data = await User.create({
                 email,
                 password
+            });
+            await Profile.create({
+                UserId: data.id
             });
             
             res.status(201).json({id: data.id, email: data.email});
@@ -51,9 +54,9 @@ class Controller {
                 audience: process.env.GOOGLE_CLIENT_ID
             });
             
-            const { email, name } = ticket.payload;
+            const { email, name, picture } = ticket.payload;
             
-            const [user, created] = await User.findOrCreate({
+            const [data, created] = await User.findOrCreate({
                 where: {
                     email
                 },
@@ -64,7 +67,15 @@ class Controller {
                 hooks: false
             });
 
-            const access_token = signToken({id: user.id});
+            if (created) {
+                await Profile.create({
+                    UserId: data.id,
+                    name: name.split(' ').map(val => val[0].toUpperCase() + val.substring(1)).join(' '),
+                    imageUrl: picture
+                });
+            }
+
+            const access_token = signToken({id: data.id});
             res.status(200).json({access_token});
         } catch (err) {
             next(err);
