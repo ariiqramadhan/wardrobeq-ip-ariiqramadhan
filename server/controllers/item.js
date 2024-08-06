@@ -53,6 +53,28 @@ class Controller {
         }
     }
     
+    static async updateItem(req, res, next) {
+        try {
+            const { itemId } = req.params;
+            const { name, color, brand, CategoryId } = req.body;
+
+            await Item.update({
+                name,
+                color,
+                brand,
+                CategoryId
+            },
+            {
+                where: {
+                    id: itemId
+                }
+            });
+            res.status(200).json({message: `Successfully update item ${itemId}`});
+        } catch (err) {
+            next(err);
+        }
+    }
+    
     // static async template(req, res, next) {
     //     try {
             

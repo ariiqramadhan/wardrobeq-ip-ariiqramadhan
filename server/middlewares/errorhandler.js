@@ -31,6 +31,14 @@ const errorHandler = (err, req, res, next) => {
             status = 401;
             message = 'Invalid Token!';
             break;
+        case 'DataNotFound':
+            status = 404;
+            message = 'Data Not Found!';
+            break;
+        case 'Forbidden':
+            status = 403;
+            message = 'Insufficient privileges to do this action';
+            break;
     }
 
     res.status(status).json({message});
