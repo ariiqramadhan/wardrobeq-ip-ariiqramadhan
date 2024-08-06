@@ -75,6 +75,20 @@ class Controller {
         }
     }
     
+    static async deleteItem(req, res, next) {
+        try {
+            const { itemId } = req.params;
+            await Item.destroy({
+                where: {
+                    id: itemId
+                }
+            });
+            res.status(200).json({message: `Successfully delete item ${itemId}`});
+        } catch (err) {
+            next(err);
+        }
+    }
+    
     // static async template(req, res, next) {
     //     try {
             
