@@ -1,0 +1,18 @@
+[
+    {
+      "name": "Shirt",
+      "description": "A garment for the upper body, including both collared shirts and casual T-shirts, with various styles and fits."
+    },
+    {
+      "name": "Outer",
+      "description": "Clothing worn over other clothes for warmth or style, such as jackets, coats, and cardigans."
+    },
+    {
+      "name": "Pants",
+      "description": "Clothing worn from the waist to the ankles, covering each leg separately."
+    },
+    {
+      "name": "Footwear",
+      "description": "Items worn on the feet, including shoes, boots, sandals, and sneakers, for protection and style."
+    }
+]

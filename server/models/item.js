@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     brand: DataTypes.STRING,
+    description: DataTypes.STRING,
     imageUrl: DataTypes.STRING,
     CategoryId: {
       type: DataTypes.INTEGER,
