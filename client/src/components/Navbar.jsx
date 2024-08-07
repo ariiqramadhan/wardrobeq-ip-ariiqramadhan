@@ -20,9 +20,9 @@ export default function Navbar() {
 
     return (
         <>
-            <div className="navbar bg-transparent">
+            <div className="navbar bg-transparent py-4 px-8">
                 <div className="flex-1 gap-10">
-                    <a className="btn btn-ghost text-3xl">WardrobeQ</a>
+                    <a className="btn btn-ghost text-3xl text-left p-0">WardrobeQ</a>
                     <div className="flex">
                         <form className="form-control">
                         <input
@@ -53,7 +53,7 @@ export default function Navbar() {
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                         >
                             <li>
-                                <h1 className='text-lg font-semibold select-none'>{user.name ? user.name : `User ${user.id}`}</h1>
+                                <h1 className='text-lg font-semibold hover:bg-transparent select-none'>{user.name ? user.name : `User ${user.id}`}</h1>
                             </li>
                             <li>
                                 <a className="justify-between">
