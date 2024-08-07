@@ -43,7 +43,8 @@ class Controller {
                     attributes: ['name', 'color', 'brand', 'imageUrl'],
                     where: {
                         UserId: req.user.id
-                    }
+                    },
+                    required: false
                 },
                 attributes: ['id', 'name']
             });

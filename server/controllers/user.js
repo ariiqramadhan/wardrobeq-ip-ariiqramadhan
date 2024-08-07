@@ -82,13 +82,21 @@ class Controller {
         }
     }
     
-    // static async template(req, res, next) {
-    //     try {
-            
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
+    static async userInfo(req, res, next) {
+        try {
+            const user = await Profile.findOne({
+                where: {
+                    UserId: req.user.id
+                },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            });
+            res.status(200).json(user);
+        } catch (err) {
+            next(err);
+        }
+    }
     
     // static async template(req, res, next) {
     //     try {
