@@ -13,7 +13,7 @@ export default function HomeCategory({ cat }) {
                 </div>
                 <div className="p-5 flex w-4/5 gap-5 overflow-x-auto">
                     {cat.Items.map((item, i) => {
-                        return <CatCard key={i} item={item} catName={cat.name}/>
+                        return <CatCard key={i} item={item}/>
                     })}
                 </div>
             </div>

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import defaultPict from '../assets/Saly-22.png'
 
-export default function CatCard({ item, catName }) {
+export default function CatCard({ item }) {
     return (
         <>
             <div className="border shrink-0">
-                <Link to={`/items/${item.id}`} state={{item, catName}} className='tooltip tooltip-right' data-tip={item.name}>
+                <Link to={`/items/${item.id}`} className='tooltip tooltip-right' data-tip={item.name}>
                     <img
                         src={item.imageUrl ? item.imageUrl : defaultPict}
                         alt={`${item.name}-pict`}
