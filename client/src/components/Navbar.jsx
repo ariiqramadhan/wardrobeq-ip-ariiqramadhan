@@ -28,7 +28,7 @@ export default function Navbar() {
                     >
                         WardrobeQ
                     </Link>
-                    <div className="flex">
+                    <div className="flex gap-5">
                         <form className="form-control">
                             <input
                                 type="text"
@@ -36,6 +36,9 @@ export default function Navbar() {
                                 className="input input-bordered w-24 md:w-auto rounded-full focus:outline-none focus:border"
                             />
                         </form>
+                        <Link to='/items'>
+                        <button className='btn bg-black rounded-full text-white'>All Item</button>
+                        </Link>
                     </div>
                 </div>
                 <div className="flex-none gap-2">

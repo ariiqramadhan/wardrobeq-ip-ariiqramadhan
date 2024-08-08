@@ -13,8 +13,8 @@ export default function CatItemsCard({ item }) {
                         className="h-64 w-64 object-cover"
                     />
                 </figure>
-                <div className="card-body">
-                    <h2 className="card-title text-base">{item.name}</h2>
+                <div className="card-body tooltip tooltip-bottom" data-tip={item.name}>
+                    <h2 className="card-title text-base line-clamp-1">{item.name}</h2>
                 </div>
             </div>
         </Link>

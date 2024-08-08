@@ -152,4 +152,22 @@ export const updateItemImage = (formData, itemId) => {
     }
 }
 
+export const getItems = () => {
+    return async function(dispatch) {
+        try {
+            const { data } = await axios({
+                method: 'get',
+                url: '/items',
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            dispatch(setItem(data));
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
+}
+
 export default itemSlice.reducer;
