@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import MainLayout from './pages/MainLayout';
+import Detail from './pages/Detail';
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <Home />
+            },
+            {
+                path: 'items/:itemId',
+                element: <Detail />
             }
         ]
     }
