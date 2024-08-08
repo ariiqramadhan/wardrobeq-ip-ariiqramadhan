@@ -57,7 +57,7 @@ export default function ItemForm({ type }) {
             <form className="bg-[#F2F2F2] p-5 rounded-lg shadow-xl" onSubmit={handleTask}>
                 <label htmlFor="name" className="form-control">
                     <div className="label">
-                        <span className="label-text">Name</span>
+                        <span className="label-text">Name <span className='text-red-400'>*</span></span>
                     </div>
                     <input
                         type="text"
@@ -69,7 +69,7 @@ export default function ItemForm({ type }) {
                 </label>
                 <label htmlFor="color" className="form-control">
                     <div className="label">
-                        <span className="label-text">Color</span>
+                        <span className="label-text">Color <span className='text-red-400'>*</span></span>
                     </div>
                     <input
                         type="text"
@@ -104,7 +104,7 @@ export default function ItemForm({ type }) {
                 </label>
                 <label htmlFor="category" className="form-control pb-8">
                     <div className="label">
-                        <span className="label-text">Category</span>
+                        <span className="label-text">Category <span className='text-red-400'>*</span></span>
                     </div>
                     <select
                         id="category"

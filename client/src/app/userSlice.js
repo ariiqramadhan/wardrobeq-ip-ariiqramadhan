@@ -70,10 +70,10 @@ export const updateUserImage = (formData) => {
                 }
             });
 
-            toast.update(wait, {render: data.message, type: 'success', isLoading: false, autoClose: 5000});
+            toast.update(wait, {render: data.message, type: 'success', isLoading: false, autoClose: 5000, closeOnClick: true});
             dispatch(getUser());
         } catch (err) {
-            toast.update(wait, {render: err.response.data.message, type: 'error', isLoading: false, autoClose: 5000});
+            toast.update(wait, {render: err.response.data.message, type: 'error', isLoading: false, autoClose: 5000, closeOnClick: true});
         }
     }
 }

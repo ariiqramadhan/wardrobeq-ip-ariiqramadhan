@@ -9,7 +9,7 @@ export default function Profile() {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [skinUndertone, setSkinUndertone] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
         if (user.name) {
@@ -25,6 +25,7 @@ export default function Profile() {
         const formData = new FormData();
         formData.append('userImg', image);
         dispatch(updateUserImage(formData));
+        setImage(null);
     }
 
     function update(e) {
@@ -36,7 +37,7 @@ export default function Profile() {
         <>
             <div className="w-1/2 mx-auto flex flex-col h-[calc(100vh-81.5px)] gap-10 pt-20">
                 <div className="self-center rounded-full">
-                    <form onChange={uploadImage}>
+                    <form className='flex flex-col gap-5' onSubmit={uploadImage}>
                         <div>
                             <label htmlFor="pict">
                                 <img
@@ -52,6 +53,7 @@ export default function Profile() {
                             </label>
                             <input type="file" className="hidden" id="pict" onChange={e => setImage(e.target.files[0])}/>
                         </div>
+                        {image ? <button className='btn btn-success text-white self-center'>Upload</button> : ''}
                     </form>
                 </div>
                 <form
