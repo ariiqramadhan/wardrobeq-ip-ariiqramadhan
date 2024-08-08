@@ -43,7 +43,7 @@ export default function Profile() {
                             type="text"
                             id="name"
                             className="input input-bordered"
-                            defaultValue={user.name}
+                            defaultValue={name}
                             onChange={e => setName(e.target.value)}
                         />
                     </label>
@@ -54,7 +54,7 @@ export default function Profile() {
                         <div className="label">
                             <span className="label-text">Skin Undertone</span>
                         </div>
-                        <select id="skinUndertone" className='select select-bordered' defaultValue={user.skinUndertone ? user.skinUndertone : 'Select One!'}
+                        <select id="skinUndertone" className='select select-bordered' value={skinUndertone ? skinUndertone : 'Select One!'}
                             onChange={e => setSkinUndertone(e.target.value)}
                         >
                             <option disabled>Select One!</option>
