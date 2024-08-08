@@ -61,6 +61,25 @@ class Controller {
         }
     }
     
+    static async catItemsAll(req, res, next) {
+        try {
+            const data = await Category.findAll({
+                include: {
+                    model: Item,
+                    attributes: ['id', 'name', 'color', 'brand', 'description', 'imageUrl'],
+                    where: {
+                        UserId: req.user.id
+                    },
+                    required: false
+                },
+                attributes: ['id', 'name', 'description']
+            });
+            res.status(200).json(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+    
     static async updateItem(req, res, next) {
         try {
             const { itemId } = req.params;
@@ -191,13 +210,36 @@ class Controller {
         }
     }
     
-    // static async template(req, res, next) {
-    //     try {
-            
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
+    static async genOutfit(req, res, next) {
+        try {
+            const { data, skinUndertone } = req.body;
+
+            const prompt = `From these data ${JSON.stringify(data)}, create 1 outfit considering my skin undertone is ${skinUndertone}. Outer is optional, but others are required. Be mindful about the color combination.
+                Answer just the outfit combination, with no longer than 70 tokens.
+                Use template like this
+                 - Item
+                 - Item
+                 - Item
+                 - Item
+                Use /n in each new line
+            `;
+
+            const openai = new OpenAI({
+                organization: 'org-E6Ob5JJ9T13GMlawLCn30Z9m',
+                project: 'proj_VANQTey2TdIV29dgFiUzfIy4'
+            });
+
+            const completion = await openai.chat.completions.create({
+                messages: [{ role: "system", content: prompt}],
+                model: "gpt-4o-mini",
+                max_tokens: 70
+            });
+
+            res.status(200).json(completion.choices[0].message.content);
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = Controller;
