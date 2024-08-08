@@ -141,7 +141,7 @@ class Controller {
                     UserId: req.user.id
                 }
             });
-            res.status(200).json('Successfully upload image');
+            res.status(200).json({message: 'Successfully upload image'});
         } catch (err) {
             next(err);
         }
