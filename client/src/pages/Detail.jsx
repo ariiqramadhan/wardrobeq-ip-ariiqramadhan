@@ -34,7 +34,7 @@ export default function Detail() {
                         <div>
                             <h1 className="text-4xl font-bold">{state.item.name}</h1>
                             <p className="text-[#696969] text-base">
-                                {state.item.brand}
+                                {state.item.brand ? state.item.brand : 'No Brand'}
                             </p>
                         </div>
                         <div className="flex flex-col gap-5">
