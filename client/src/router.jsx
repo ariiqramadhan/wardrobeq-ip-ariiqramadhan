@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import MainLayout from './pages/MainLayout';
 import Detail from './pages/Detail';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: 'items/:itemId',
                 element: <Detail />
+            },
+            {
+                path: 'profile',
+                element: <Profile />
             }
         ]
     }

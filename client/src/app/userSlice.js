@@ -34,4 +34,27 @@ export const getUser = () => {
     }
 }
 
+export const updateUser = (name, skinUndertone) => {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios({
+                method: 'put',
+                url: '/user',
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                },
+                data: {
+                    name,
+                    skinUndertone
+                }
+            });
+
+            toast.success(data.message);
+            dispatch(getUser());
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
+}
+
 export default userSlice.reducer;
