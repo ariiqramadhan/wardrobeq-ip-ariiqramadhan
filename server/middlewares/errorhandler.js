@@ -39,6 +39,14 @@ const errorHandler = (err, req, res, next) => {
             status = 403;
             message = 'Insufficient privileges to do this action';
             break;
+        case 'AlreadyPremium':
+            status = 400;
+            message = 'You are already a premium';
+            break;
+        case 'UpgradeFailed':
+            status = 400;
+            message = 'You failed to upgrade, contact our customer support';
+            break;
     }
 
     res.status(status).json({message});

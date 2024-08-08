@@ -1,8 +1,9 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-const { User, Profile } = require('../models');
+const { User, Profile, Order } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
 const cloudinary = require('cloudinary').v2;
+const axios = require('axios');
 
 class Controller {
     static async register(req, res, next) {
@@ -147,13 +148,46 @@ class Controller {
         }
     }
     
-    // static async template(req, res, next) {
-    //     try {
-            
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
+    static async upgrade(req, res, next) {
+        try {
+            const { orderId } = req.body;
+            const order = await Order.findOne({
+                where: {
+                    orderId
+                }
+            });
+
+            if (!order) {
+                throw {name: 'DataNotFound'};
+            }
+
+            const base64Server = Buffer.from(process.env.MIDTRANS_SERVER_KEY + ':').toString('base64');
+            const { data } = await axios({
+                method: 'get',
+                url: `https://api.sandbox.midtrans.com/v2/${orderId}/status`,
+                headers: {
+                    Authorization: `Basic ${base64Server}`
+                }
+            });
+
+            if (data.transaction_status === 'capture' && data.status_code === '200') {
+                await Profile.update({
+                    type: 'Premium'
+                },
+                {
+                    where: {
+                        UserId: req.user.id
+                    }
+                });
+                await order.update({status: 'Paid'});
+                res.status(200).json({message: 'Upgrade Success'});
+            } else {
+                throw {name: 'UpgradeFailed'}
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = Controller;
