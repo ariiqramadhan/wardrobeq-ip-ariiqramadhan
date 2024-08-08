@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from '../config/axiosinstance';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignForm({ type }) {
     const [email, setEmail] = useState('');
@@ -117,20 +117,14 @@ export default function SignForm({ type }) {
                             className="input input-bordered"
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <label className="label">
-                            <a
-                                href="#"
-                                className="label-text-alt link link-hover"
-                            >
-                                Forgot password?
-                            </a>
-                        </label>
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary" type="submit">
                             {type === 'login' ? 'Login' : 'Sign Up'}
                         </button>
                     </div>
+                    {type === 'login' ? <Link className='text-sm text-center underline' to='/register'>Dont have account?</Link> : <Link className='text-sm text-center underline' to='/login'>Already have account?</Link>}
+
                 </form>
                 <div className="flex justify-center pb-5">
                     <div id="buttonDiv"></div>
