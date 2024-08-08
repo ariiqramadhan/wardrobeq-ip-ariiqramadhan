@@ -47,6 +47,10 @@ const errorHandler = (err, req, res, next) => {
             status = 400;
             message = 'You failed to upgrade, contact our customer support';
             break;
+        case 'OnlyPremium':
+            status = 403;
+            message = 'You must be premium to do this action';
+            break;
     }
 
     res.status(status).json({message});
