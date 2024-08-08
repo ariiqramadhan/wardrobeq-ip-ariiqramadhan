@@ -4,6 +4,7 @@ const authentication = require('../middlewares/authentication');
 const errorHandler = require('../middlewares/errorhandler');
 const itemRouter = require('./items');
 const openAIRouter = require('./openai');
+const userRouter = require('./user');
  
 router.get('/', (req, res) => {
     res.status(200).json('Server Running');
@@ -11,7 +12,7 @@ router.get('/', (req, res) => {
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.post('/google-login', UserController.googleLogin);
-router.get('/user', authentication, UserController.userInfo);
+router.use('/user', userRouter);
 router.use('/items', itemRouter);
 router.use('/openai', openAIRouter);
 

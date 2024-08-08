@@ -98,13 +98,24 @@ class Controller {
         }
     }
     
-    // static async template(req, res, next) {
-    //     try {
-            
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
+    static async updateProfile(req, res, next) {
+        try {
+            const { name, skinUndertone } = req.body;
+            await Profile.update({
+                name,
+                skinUndertone
+            },
+            {
+                where: {
+                    UserId: req.user.id
+                }
+            });
+
+            res.status(200).json({message: 'Successfully update profile'});
+        } catch (err) {
+            next(err);
+        }
+    }
     
     // static async template(req, res, next) {
     //     try {
