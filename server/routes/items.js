@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const authentication = require('../middlewares/authentication');
 const ItemController = require('../controllers/item');
-const authorization = require('../middlewares/authorization');
+const {authorization} = require('../middlewares/authorization');
 const multer = require('multer');
 
 const storage = multer.memoryStorage();

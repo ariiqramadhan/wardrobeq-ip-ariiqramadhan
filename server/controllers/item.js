@@ -214,6 +214,10 @@ class Controller {
         try {
             const { data, skinUndertone } = req.body;
 
+            if (!data[0].Items.length && !data[1].Items.length && !data[2].Items.length && !data[3].Items.length) {
+                res.status(200).json('You got no items in wardrobe');
+            }
+
             const prompt = `From these data ${JSON.stringify(data)}, create 1 outfit considering my skin undertone is ${skinUndertone}. Outer is optional, but others are required. Be mindful about the color combination.
                 Answer just the outfit combination, with no longer than 70 tokens.
                 Use template like this

@@ -1,4 +1,4 @@
-const { Item } = require('../models')
+const { Item, Profile } = require('../models')
 
 const authorization = async (req, res, next) => {
     try {
@@ -14,4 +14,24 @@ const authorization = async (req, res, next) => {
     }
 }
 
-module.exports = authorization;
+const premiumAuth = async (req, res, next) => {
+    try {
+        const userProfile = await Profile.findOne({
+            where: {
+                UserId: req.user.id
+            }
+        });
+        if (userProfile.type !== 'Premium') {
+            throw {name: 'OnlyPremium'};
+        }
+
+        next();
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = {
+    authorization,
+    premiumAuth
+};
