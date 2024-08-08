@@ -1,13 +1,15 @@
 const { Item, Category } = require('../models');
+const OpenAI = require('openai');
 
 class Controller {
     static async addItem(req, res, next) {
         try {
-            const { name, color, brand, CategoryId } = req.body;
+            const { name, color, brand, CategoryId, description } = req.body;
             const data = await Item.create({
                 name,
                 color,
                 brand,
+                description,
                 CategoryId,
                 UserId : req.user.id
             });
@@ -40,13 +42,13 @@ class Controller {
             const data = await Category.findAll({
                 include: {
                     model: Item,
-                    attributes: ['name', 'color', 'brand', 'imageUrl'],
+                    attributes: ['id', 'name', 'color', 'brand', 'description', 'imageUrl'],
                     where: {
                         UserId: req.user.id
                     },
                     required: false
                 },
-                attributes: ['id', 'name']
+                attributes: ['id', 'name', 'description']
             });
             res.status(200).json(data);
         } catch (err) {
@@ -85,6 +87,35 @@ class Controller {
                 }
             });
             res.status(200).json({message: `Successfully delete item ${itemId}`});
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async funFact(req, res, next) {
+        try {
+            const { name, brand, catName } = req.body;
+
+            let prompt = `Give me fun fact about ${name}`
+
+            if (brand) {
+                prompt += ` from brand ${brand}`
+            }
+
+            prompt += `. It is a ${catName}. Answer with no longer than 70 tokens`;
+
+            const openai = new OpenAI({
+                organization: 'org-E6Ob5JJ9T13GMlawLCn30Z9m',
+                project: 'proj_VANQTey2TdIV29dgFiUzfIy4'
+            });
+
+            const completion = await openai.chat.completions.create({
+                messages: [{ role: "system", content: prompt}],
+                model: "gpt-4o-mini",
+                max_tokens: 70
+            });
+
+            res.status(200).json(completion.choices[0].message.content);
         } catch (err) {
             next(err);
         }
