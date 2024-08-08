@@ -170,4 +170,22 @@ export const getItems = () => {
     }
 }
 
+export const getCatItemsAll = () => {
+    return async function(dispatch) {
+        try {
+            const { data } = await axios({
+                method: 'get',
+                url: '/items/cat/all',
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            dispatch(setItem(data));
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
+}
+
 export default itemSlice.reducer;

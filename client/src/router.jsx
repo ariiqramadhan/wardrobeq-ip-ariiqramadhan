@@ -9,6 +9,7 @@ import AddItem from './pages/AddItem';
 import EditItem from './pages/EditItem';
 import CategoryItems from './pages/CategoryItems';
 import AllItem from './pages/AllItem';
+import Drip from './pages/Drip';
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <Home />
+            },
+            {
+                path: 'drip',
+                element: <Drip />
             },
             {
                 path: 'items',

@@ -46,4 +46,28 @@ export const  getFunFact = (name, brand, catName) => {
     }
 }
 
+export const  getOutift = (items) => {
+    return async function(dispatch) {
+        try {
+            dispatch(setLoading(true));
+            const { data } = await axios({
+                method: 'post',
+                url: '/openai/outfit',
+                data: {
+                    data: items
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            dispatch(setOutput(data));
+        } catch (err) {
+            toast.error(err.response.data.message);
+        } finally {
+            dispatch(setLoading(false));
+        }
+    }
+}
+
 export default aiSlice.reducer;
