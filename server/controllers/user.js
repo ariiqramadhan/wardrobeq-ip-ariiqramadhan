@@ -2,6 +2,7 @@ const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
 const { User, Profile } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
+const cloudinary = require('cloudinary').v2;
 
 class Controller {
     static async register(req, res, next) {
@@ -112,6 +113,35 @@ class Controller {
             });
 
             res.status(200).json({message: 'Successfully update profile'});
+        } catch (err) {
+            next(err);
+        }
+    }
+    
+    static async uploadPhoto(req, res, next) {
+        try {
+            const image = req.file;
+            const base64 = Buffer.from(image.buffer).toString('base64');
+            cloudinary.config({ 
+                cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+                api_key: process.env.CLOUDINARY_API_KEY, 
+                api_secret: process.env.CLOUDINARY_API_SECRET
+            });
+            const response = await cloudinary.uploader.upload(`data:${image.mimetype};base64,${base64}`,
+                {
+                    public_id: image.originalname,
+                    folder: 'IProject'
+                }
+            );
+            await Profile.update({
+                imageUrl: response.secure_url
+            },
+            {
+                where: {
+                    UserId: req.user.id
+                }
+            });
+            res.status(200).json('Successfully upload image');
         } catch (err) {
             next(err);
         }
