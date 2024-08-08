@@ -41,7 +41,7 @@ export default function Detail() {
         <>
             <div className="p-20">
                 <div className="flex h-[calc(100vh-81.5px-10rem)] gap-10">
-                    <div className="w-1/2 bg-[#F2F2F2] rounded-lg">
+                    <div className="w-1/2 bg-[#F2F2F2] rounded-lg shadow-xl">
                         <img
                             src={item.imageUrl ? item.imageUrl : defaultPict}
                             alt={`${item.name}-pict`}
