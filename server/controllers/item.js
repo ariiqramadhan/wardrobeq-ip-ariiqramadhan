@@ -59,20 +59,23 @@ class Controller {
     static async updateItem(req, res, next) {
         try {
             const { itemId } = req.params;
-            const { name, color, brand, CategoryId } = req.body;
+            const { name, color, description, brand, CategoryId } = req.body;
 
-            await Item.update({
+            const data = await Item.update({
                 name,
                 color,
                 brand,
-                CategoryId
+                CategoryId,
+                description
             },
             {
                 where: {
                     id: itemId
-                }
+                },
+                returning: true
             });
-            res.status(200).json({message: `Successfully update item ${itemId}`});
+            console.log(data[1][0].dataValues);
+            res.status(200).json(data[1][0].dataValues);
         } catch (err) {
             next(err);
         }
@@ -116,6 +119,21 @@ class Controller {
             });
 
             res.status(200).json(completion.choices[0].message.content);
+        } catch (err) {
+            next(err);
+        }
+    }
+    
+    static async itemDetail(req, res, next) {
+        try {
+            const { itemId } = req.params;
+            const data = await Item.findByPk(itemId, {
+                include: {
+                    model: Category,
+                    attributes: ['name']
+                }
+            });
+            res.status(200).json(data);
         } catch (err) {
             next(err);
         }

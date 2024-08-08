@@ -5,8 +5,9 @@ const authorization = require('../middlewares/authorization');
 
 router.use(authentication);
 router.get('/', ItemController.items);
-router.get('/cat', ItemController.catItems);
 router.post('/', ItemController.addItem);
+router.get('/cat', ItemController.catItems);
+router.get('/:itemId', authorization, ItemController.itemDetail);
 router.put('/:itemId', authorization, ItemController.updateItem);
 router.delete('/:itemId', authorization, ItemController.deleteItem);
 
