@@ -1,5 +1,6 @@
 const { Item, Category } = require('../models');
 const OpenAI = require('openai');
+const cloudinary = require('cloudinary').v2;
 
 class Controller {
     static async addItem(req, res, next) {
@@ -134,6 +135,36 @@ class Controller {
                 }
             });
             res.status(200).json(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async uploadPhoto(req, res, next) {
+        try {
+            const { itemId } = req.params;
+            const image = req.file;
+            const base64 = Buffer.from(image.buffer).toString('base64');
+            cloudinary.config({ 
+                cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+                api_key: process.env.CLOUDINARY_API_KEY, 
+                api_secret: process.env.CLOUDINARY_API_SECRET
+            });
+            const response = await cloudinary.uploader.upload(`data:${image.mimetype};base64,${base64}`,
+                {
+                    public_id: image.originalname,
+                    folder: 'IProject/item'
+                }
+            );
+            await Item.update({
+                imageUrl: response.secure_url
+            },
+            {
+                where: {
+                    id: itemId
+                }
+            });
+            res.status(200).json({message: 'Successfully upload image'});
         } catch (err) {
             next(err);
         }
