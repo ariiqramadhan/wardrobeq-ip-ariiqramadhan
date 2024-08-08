@@ -126,7 +126,7 @@ export default function ItemForm({ type }) {
                     >
                         {type === 'add' ? 'Add' : 'Save'}
                     </button>
-                    <Link to={'..'}>
+                    <Link to={type === 'add' ? '/' : `/items/${itemId}`}>
                         <button className="btn btn-error text-white">
                             Cancel
                         </button>
