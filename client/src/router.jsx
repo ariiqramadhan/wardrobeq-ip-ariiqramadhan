@@ -5,6 +5,8 @@ import Register from './pages/Register';
 import MainLayout from './pages/MainLayout';
 import Detail from './pages/Detail';
 import Profile from './pages/Profile';
+import AddItem from './pages/AddItem';
+import EditItem from './pages/EditItem';
 
 const router = createBrowserRouter([
     {
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
             {
                 path: 'profile',
                 element: <Profile />
+            },
+            {
+                path: 'add-item',
+                element: <AddItem />
+            },
+            {
+                path: 'items/:itemId/edit',
+                element: <EditItem />
             }
         ]
     }

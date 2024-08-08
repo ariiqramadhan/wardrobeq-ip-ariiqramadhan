@@ -39,6 +39,22 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className="flex-none gap-2">
+                    <Link className="rounded-full hover:bg-[#F2F2F2] p-1" to='/add-item'>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 4.5v15m7.5-7.5h-15"
+                            />
+                        </svg>
+                    </Link>
                     <div className="dropdown dropdown-end">
                         <div
                             tabIndex="0"
@@ -65,7 +81,9 @@ export default function Navbar() {
                                 </h1>
                             </li>
                             <li>
-                                <Link className="justify-between" to='/profile'>Profile</Link>
+                                <Link className="justify-between" to="/profile">
+                                    Profile
+                                </Link>
                             </li>
                             <li>
                                 <a>Settings</a>
