@@ -7,6 +7,7 @@ import Detail from './pages/Detail';
 import Profile from './pages/Profile';
 import AddItem from './pages/AddItem';
 import EditItem from './pages/EditItem';
+import CategoryItems from './pages/CategoryItems';
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: 'items/:itemId/edit',
                 element: <EditItem />
+            },
+            {
+                path: '/category/:catId',
+                element: <CategoryItems />
             }
         ]
     }

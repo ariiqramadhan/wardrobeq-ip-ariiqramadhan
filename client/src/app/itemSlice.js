@@ -18,7 +18,7 @@ export const itemSlice = createSlice({
 export const { setItem } = itemSlice.actions;
 
 export const getItem = (itemId) => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         try {
             const { data } = await axios({
                 method: 'get',
@@ -35,8 +35,26 @@ export const getItem = (itemId) => {
     }
 } 
 
+export const getItemByCat = (catId) => {
+    return async function(dispatch) {
+        try {
+            const { data } = await axios({
+                method: 'get',
+                url: `/items/cat/${catId}`,
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            dispatch(setItem(data));
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
+}
+
 export const addItem = (name, color, brand, description, CategoryId) => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         try {
             await axios({
                 method: 'post',
@@ -66,7 +84,7 @@ export const addItem = (name, color, brand, description, CategoryId) => {
 }
 
 export const editItem = (name, color, brand, description, CategoryId, itemId) => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         try {
             const { data } = await axios({
                 method: 'put',
@@ -95,7 +113,7 @@ export const editItem = (name, color, brand, description, CategoryId, itemId) =>
 }
 
 export const deleteItem = itemId => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         try {
             const { data } = await axios({
                 method: 'delete',
@@ -114,7 +132,7 @@ export const deleteItem = itemId => {
 }
 
 export const updateItemImage = (formData, itemId) => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         const wait = toast.loading('Image is uploading');
         try {
             const { data } = await axios({
