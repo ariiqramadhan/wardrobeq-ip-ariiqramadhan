@@ -94,4 +94,23 @@ export const editItem = (name, color, brand, description, CategoryId, itemId) =>
     }
 }
 
+export const deleteItem = itemId => {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios({
+                method: 'delete',
+                url: `/items/${itemId}`,
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            toast.success(data.message);
+            dispatch(getCatItems());
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
+}
+
 export default itemSlice.reducer;
