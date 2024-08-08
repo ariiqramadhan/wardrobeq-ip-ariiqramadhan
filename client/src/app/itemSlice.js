@@ -113,4 +113,25 @@ export const deleteItem = itemId => {
     }
 }
 
+export const updateItemImage = (formData, itemId) => {
+    return async function (dispatch) {
+        const wait = toast.loading('Image is uploading');
+        try {
+            const { data } = await axios({
+                method: 'patch',
+                url: `/items/${itemId}/img`,
+                data: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            });
+
+            dispatch(getItem(itemId));
+            toast.update(wait, {render: data.message, type: 'success', isLoading: false, autoClose: 5000, closeOnClick: true});
+        } catch (err) {
+            toast.update(wait, {render: err.response.data.message, type: 'error', isLoading: false, autoClose: 5000, closeOnClick: true});
+        }
+    }
+}
+
 export default itemSlice.reducer;

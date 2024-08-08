@@ -1,9 +1,9 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import defaultPict from '../assets/Saly-22.png';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getFunFact, setLoading, setOutput } from '../app/aiSlice';
-import { deleteItem, getItem } from '../app/itemSlice';
+import { deleteItem, getItem, updateItemImage } from '../app/itemSlice';
 
 export default function Detail() {
     const ai = useSelector((state) => state.ai.value);
@@ -12,6 +12,7 @@ export default function Detail() {
     const dispatch = useDispatch();
     const { itemId } = useParams();
     const navigate = useNavigate();
+    const [image, setImage] = useState(null);
 
     function handleFact() {
         dispatch(getFunFact(item.name, item.brand, item.Category.name));
@@ -20,6 +21,14 @@ export default function Detail() {
     function handleDelete() {
         dispatch(deleteItem(itemId));
         navigate('/');
+    }
+
+    function uploadImage(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('itemImg', image);
+        dispatch(updateItemImage(formData, itemId));
+        setImage(null);
     }
 
     useEffect(() => {
@@ -36,7 +45,7 @@ export default function Detail() {
                         <img
                             src={item.imageUrl ? item.imageUrl : defaultPict}
                             alt={`${item.name}-pict`}
-                            className="w-full h-full object-scale-down rounded-lg"
+                            className="w-full h-full object-cover rounded-lg"
                         />
                     </div>
                     <div className="w-1/2 grid grid-rows-3 gap-3">
@@ -61,6 +70,52 @@ export default function Detail() {
                                         />
                                     </svg>
                                 </Link>
+                                <button
+                                    onClick={() =>
+                                        document
+                                            .getElementById('uploadImg')
+                                            .showModal()
+                                    }
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="size-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                                        />
+                                    </svg>
+                                </button>
+                                <dialog id="uploadImg" className="modal">
+                                    <div className="modal-box">
+                                        <h3 className="font-bold text-lg pb-5">
+                                            Upload Image
+                                        </h3>
+                                        <form onSubmit={uploadImage} className='flex items-center gap-3'>
+                                            <input
+                                                type="file"
+                                                className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                                                onChange={(e) =>
+                                                    setImage(e.target.files[0])
+                                                }
+                                            />
+                                            <button className='btn btn-success btn-sm text-white'>Upload</button>
+                                        </form>
+                                    </div>
+                                    <form
+                                        method="dialog"
+                                        className="modal-backdrop"
+                                    >
+                                        {/* if there is a button in form, it will close the modal */}
+                                        <button>Close</button>
+                                    </form>
+                                </dialog>
                                 <button
                                     className="text-red-400"
                                     onClick={() =>
