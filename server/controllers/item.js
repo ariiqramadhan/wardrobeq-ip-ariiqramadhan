@@ -47,7 +47,11 @@ class Controller {
                     where: {
                         UserId: req.user.id
                     },
-                    required: false
+                    required: false,
+                    limit: 5,
+                    order: [
+                        ['createdAt', 'DESC']
+                    ]
                 },
                 attributes: ['id', 'name', 'description']
             });
@@ -165,6 +169,23 @@ class Controller {
                 }
             });
             res.status(200).json({message: 'Successfully upload image'});
+        } catch (err) {
+            next(err);
+        }
+    }
+    
+    static async itemByCat(req, res, next) {
+        try {
+            const { catId } = req.params;
+            const data = await Category.findByPk(catId, {
+                include: {
+                    model: Item,
+                    where: {
+                        UserId: req.user.id
+                    }
+                }
+            });
+            res.status(200).json(data);
         } catch (err) {
             next(err);
         }
