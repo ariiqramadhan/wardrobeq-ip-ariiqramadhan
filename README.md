@@ -63,9 +63,8 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-    "message": [
-        "Email already registered"
-    ]
+    "message": "Email already registered"
+    
 }
 OR
 {
@@ -131,7 +130,7 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
-    "message": "Invalid email or password"
+    "message": "Invalid email or password!"
 }
 ```
 
@@ -378,6 +377,27 @@ _Response (200 - OK)_
     "updatedAt": "2024-08-08T23:29:50.368Z",
     "createdAt": "2024-08-08T23:29:50.368Z",
     "imageUrl": null
+}
+```
+_Response (400 - Bad Request)_
+
+```json
+{
+    "message": [
+        "Name Required!"
+    ]
+}
+OR
+{
+    "message": [
+        "Color Required!"
+    ]
+}
+OR
+{
+    "message": [
+        "Category Required!"
+    ]
 }
 ```
 &nbsp;
