@@ -85,12 +85,6 @@ OR
         "Password Required!"
     ]
 }
-OR
-{
-    "message": [
-        "Password must be at least 5 characters"
-    ]
-}
 ```
 
 &nbsp;
@@ -121,7 +115,15 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-    "message": "Email and password required"
+    "message": "Please input your email!"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+    "message": "Please input your password!"
 }
 ```
 
@@ -209,14 +211,7 @@ _Response (200 - OK)_
 
 ```json
 {
-  {
-    "id": 1,
-    "name": "Ariiq Ramadhan",
-    "skinUndertone": null,
-    "imageUrl": "https://lh3.googleusercontent.com/a/ACg8ocJMrzNeD0Z-MJe8G2aK61rsGiX4oVf9tKZeOv-eXUqS2SzOzFiv=s96-c",
-    "UserId": 1,
-    "type": "Premium"
-  }
+    "message": "Successfully update profile"
 }
 ```
 &nbsp;
@@ -243,7 +238,9 @@ Request :
 _Response (200 - OK)_
 
 ```json
-{"message": "Successfully upload image"}
+{
+    "message": "Successfully upload image"
+}
 ```
 &nbsp;
 
@@ -344,49 +341,6 @@ _Response (200 - OK)_
     ...
 ]
 ```
-&nbsp;
-
-## 11. POST /items
-
-Request :
-
--   headers :
-
-```json
-{
-    "access_token": "string"
-}
-```
-
-- body :
-```json
-{
-    "name": "string",
-    "color": "string",
-    "brand": "string",
-    "CategoryId": "integer",
-    "description": "string" 
-}
-```
-
-_Response (200 - OK)_
-
-```json
-{
-    "id": 1,
-    "name": "Carpenter Pants",
-    "color": "Blue Denim",
-    "brand": "",
-    "description": "",
-    "CategoryId": 3,
-    "UserId": 1,
-    "updatedAt": "2024-08-08T23:29:50.368Z",
-    "createdAt": "2024-08-08T23:29:50.368Z",
-    "imageUrl": null
-}
-```
-&nbsp;
-
 ## 11. POST /items
 
 Request :
@@ -795,9 +749,8 @@ Request :
 - body :
 ```json
 {
-    "name": "string",
-    "brand": "string",
-    "catName": "string"
+    "data": "array of object",
+    "skinUndertone": "string"
 }
 ```
 
@@ -812,7 +765,7 @@ _Response (400 - Bad Request)_
 {
     "message": "You must be premium to do this action"
 }
-
+```
 &nbsp;
 
 ## Global Error
